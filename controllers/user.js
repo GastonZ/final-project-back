@@ -77,6 +77,7 @@ const controller = {
           process.env.KEY_JWT,
           { expiresIn: 60 * 60 * 24 * 365 }
         );
+        console.log(token);
         let userToken = {
           email: user.email,
           role: user.role,
