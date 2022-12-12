@@ -8,7 +8,8 @@ const schema = new mongoose.Schema({
     imageDetails: {type: String, required: true},
     peakPower:{type: String, required: true},
     milesPerSec:{type: String, required: true},
-    acceleration:{type: String, required: true}
+    acceleration:{type: String, required: true},
+    userId:{type: mongoose.Types.ObjectId, ref:"users" ,required: true}
 })
 const Car = mongoose.model('cars',schema);
 module.exports = Car;
