@@ -6,7 +6,7 @@ create: async(req, res) => {
     try {
         let new_car = await Car.create(req.body)
         res.status(201).json({
-            id: car._id,
+            id: new_car._id,
             success: true,
             message: 'The car has been created with success'
         })
@@ -31,9 +31,9 @@ create: async(req, res) => {
             }
         }
         try {
-            let read_city = await City.find(query)
+            let read_car = await Car.find(query)
             res.status(200).json({
-                response: read_city,
+                response: read_car,
                 success: true,
                 message: 'The cars has been found'
             })
@@ -90,7 +90,30 @@ update: async(req, res) => {
                 message: error.message
             })
         }
-        }
+        },
+        readId: async(req, res) => {
+            let { id } = req.params
+            try {
+                let oneCar = await Car.findById(id).populate([{path:'userId',select:'name photo -_id'}])
+                if(id){
+                    res.status(200).json({
+                        response: oneCar,
+                        success: true,
+                        message: 'Car recovery succesfully'
+                    })
+                }else{
+                    res.status(404).json({
+                        succes: false,
+                        message: 'No car found'
+                    })
+                }
+            } catch (error) {
+                res.status(400).json({
+                    success: false,
+                    message: error.message
+                })
+            }
+            }
 }
 
 

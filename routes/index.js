@@ -1,5 +1,8 @@
-let user = require('./users')
+const router = require('./users');
+let users = require('./users')
+let cars = require('./cars')
 
-router.use('/auth', user)
+router.use('/cars', cars)
+router.use('/auth', users)
 
 module.exports = router;
