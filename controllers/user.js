@@ -48,8 +48,14 @@ const controller = {
         { new: true }
       );
       if (user) {
+        
+          res.status(302).json({
+            response: code,
+            success: true,
+            message: "User verified",
+          });
         return res.redirect("http://localhost:3000/");
-      }
+        }
       return userNotFoundResponse(req, res);
     } catch (error) {
       next(error);

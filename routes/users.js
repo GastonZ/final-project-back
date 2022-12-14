@@ -4,7 +4,7 @@ const validator = require('../middlewares/validator')
 const accountExistsSignUp = require('../middlewares/accountExistsSignUp')
 const schema = require('../schemas/users')
 const schemaSignIn = require ('../schemas/signIn')
-const schemaProfile = require('../schemas/profileEdit')
+const profileEdit = require('../schemas/profileEdit')
 const mustSignIn =  require ('../middlewares/mustSignIn')
 const accountExistsSignIn = require('../middlewares/accountExistsSignIn')
 const passport = require ('../config/passport')
@@ -16,6 +16,6 @@ router.post('/signin',validator(schemaSignIn), accountExistsSignIn,accountHasBee
 router.post('/token', passport.authenticate("jwt", { session: false }), mustSignIn, loginWithToken);
 router.put("/signout",passport.authenticate("jwt", { session: false }),unlogin);
 router.get('/me/:id',passport.authenticate("jwt", { session: false }) ,readUserData)
-router.patch('/me/:id',passport.authenticate("jwt", { session: false }),validator(schemaProfile),updateUserData)
+router.patch('/me/:id',passport.authenticate("jwt", { session: false }),validator(profileEdit),updateUserData)
 
 module.exports = router
