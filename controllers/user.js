@@ -12,8 +12,9 @@ const jwt = require("jsonwebtoken");
 
 const controller = {
   register: async (req, res, next) => {
-    let { name, lastName, photo, age, email, user, password } = req.body;
+    let { name, lastName, age, email, user, password } = req.body;
     let role = "user";
+    let photo = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/1200px-Elon_Musk_Royal_Society_%28crop2%29.jpg";
     let verified = false;
     let logged = false;
     let code = crypto.randomBytes(10).toString("hex");
@@ -85,6 +86,7 @@ const controller = {
         );
         console.log(token);
         let userToken = {
+          name : user.name,
           email: user.email,
           role: user.role,
           lastName: user.lastName,
