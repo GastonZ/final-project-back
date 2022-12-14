@@ -27,7 +27,7 @@ const schema = joi.object({
             }),
             photo: joi
             .string()
-            .required()
+         
             .uri()
             .messages({
                 "any.required": "This field is required.",
@@ -35,7 +35,7 @@ const schema = joi.object({
             }),
             age: joi
             .number()
-            .required()
+ 
             .min(1)
             .messages({
                 "any.required": "This field is required.",
