@@ -30,7 +30,7 @@ function getTransport(client) {
 function getEmailBody(mail,code,host) { 
     return `
     <!DOCTYPE html>
-    <!-- saved from url=(0044)file:///C:/Users/crist/Downloads/motorX.html -->
+    
     <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
     
     <head>
@@ -39,7 +39,7 @@ function getEmailBody(mail,code,host) {
       <meta name="viewport" content="width=device-width,initial-scale=1">
       <!--[if mso]><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch><o:AllowPNG/></o:OfficeDocumentSettings></xml><![endif]--><!--[if !mso]><!-->
       <link href="./motorX3_files/css" rel="stylesheet" type="text/css">
-      <link href="./motorX3_files/css(1)" rel="stylesheet" type="text/css"><!--<![endif]-->
+      <link href="./motorX3_files/css(1)" rel="stylesheet" type="text/css">
       <style>
         * {
           box-sizing: border-box
@@ -488,7 +488,7 @@ function getEmailBody(mail,code,host) {
             </td>
           </tr>
         </tbody>
-      </table><!-- End -->
+      </table>
     </body>
     
     </html>
