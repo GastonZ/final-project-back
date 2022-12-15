@@ -44,10 +44,9 @@ const Item = require('../models/Items')
      }
    },
 
-   update: async (req, res) => {
+   /* update: async (req, res) => {
      let query = {};
      let id = req.user.id;
-
      if (req.query.shopId) {
        query = {
          shopId: req.query.shopId,
@@ -61,12 +60,12 @@ const Item = require('../models/Items')
        };
      }
      try {
-       let items = await Items.findOne(query);
+       let items = await Item.findOne(query);
        if (items) {
          if (items.userId.includes(id)) {
-           await Items.findOneAndUpdate(
+           await Item.findOneAndUpdate(
              { _id: items._id },
-             { $pull: { userId: id } },
+             { userId: '' },
              { new: true }
            );
            res.status(200).json({
@@ -76,9 +75,9 @@ const Item = require('../models/Items')
              showed: false,
            });
          } else {
-           await Items.findOneAndUpdate(
+           await Item.findOneAndUpdate(
              { _id: items._id },
-             { $push: { userId: id } },
+             { userId: id },
              { new: true }
            );
            res.status(200).json({
@@ -100,7 +99,28 @@ const Item = require('../models/Items')
          success: false,
        });
      }
-   },
+   }, */
+   /* updateRemove: async (req, res) => {
+    let { id } = req.params;
+    
+    try {
+      let response = await Item.findOneAndUpdate(
+        { _id: id },
+        { userId: null },
+        { new: true }
+      );
+      res.status(200).json({
+        message: `item removed`,
+        success: true,
+        response,
+      });
+    } catch (error) {
+      res.status(400).json({
+        message: error.message,
+        success: false,
+      });
+    }
+  }, */
    destroy: async (req, res) => {
      let { id } = req.params;
      try {
