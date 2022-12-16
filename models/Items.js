@@ -8,5 +8,5 @@ const schema = new mongoose.Schema({
     description:{type: String, required: true},
     userId:{type: mongoose.Types.ObjectId, ref:"users" ,required: true}
 })
-const Item = mongoose.model('items',schema);
-module.exports = Item;
+const Items = mongoose.model('items',schema);
+module.exports = Items;
