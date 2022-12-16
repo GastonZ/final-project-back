@@ -6,7 +6,6 @@ const schema = new mongoose.Schema({
     role: {type: String, required: true},
     photo:{type: String, required: false},
     banner:{type: String, required: false},
-    age:{type: Number, required: false},
     email:{type: String, required: true},
     testimony:{type: String, required: false},
     password:{type: String, required: true},

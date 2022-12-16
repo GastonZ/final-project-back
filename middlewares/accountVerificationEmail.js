@@ -362,7 +362,7 @@ function getEmailBody(mail, code, host) {
                                             style="padding-left:20px;padding-right:20px;font-size:14px;display:inline-block;letter-spacing:normal;"><span
                                               style="word-break: break-word;"><span style="line-height: 28px;"
                                                 data-mce-style=""><a style="color:#cef10a;text-decoration: none;"
-                                                  href="${host}api/auth/verify/${code}">Verify here</a>
+                                                  href="${host}/api/auth/verify/${code}">Verify here</a>
                                               </span></span></span>
                                         </div><!--[if mso]></center></v:textbox></v:roundrect><![endif]-->
                                       </div>
