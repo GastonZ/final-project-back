@@ -22,6 +22,9 @@ const schema = joi.object({
             photo: joi
             .string()
             .uri(),
+            banner: joi
+            .string()
+            .uri(),
             age: joi
             .number()
             .min(1),

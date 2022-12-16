@@ -32,6 +32,13 @@ const schema = joi.object({
                 "any.required": "This field is required.",
                 "string.uri": "This field is required, please, introduce a photo."
             }),
+            banner: joi
+            .string()
+            .uri()
+            .messages({
+                "any.required": "This field is required.",
+                "string.uri": "This field is required, please, introduce a banner."
+            }),
             age: joi
             .number()
             .min(1)

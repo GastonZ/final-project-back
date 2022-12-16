@@ -15,6 +15,7 @@ const controller = {
     let { name, lastName, age, email, user, password } = req.body;
     let role = "user";
     let photo = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/1200px-Elon_Musk_Royal_Society_%28crop2%29.jpg";
+    let banner = "https://cdn.wallpapersafari.com/13/5/tcfibJ.jpg"
     let verified = false;
     let logged = false;
     let code = crypto.randomBytes(10).toString("hex");
@@ -25,6 +26,7 @@ const controller = {
         name,
         lastName,
         photo,
+        banner,
         age,
         email,
         user,
@@ -66,6 +68,7 @@ const controller = {
   entry: async (req, res, next) => {
     const { password } = req.body;
     const { user } = req;
+    console.log(user);
     try {
       const checkPassword = bcryptjs.compareSync(password, user.password);
       if (checkPassword) {
@@ -78,6 +81,7 @@ const controller = {
           {
             id: userDB._id,
             name: userDB.name,
+            banner: userDB.banner,
             photo: userDB.photo,
             logged: userDB.logged,
           },
@@ -88,13 +92,14 @@ const controller = {
         let userToken = {
           name : user.name,
           email: user.email,
+          banner: user.banner,
           role: user.role,
           lastName: user.lastName,
           logged: user.logged,
           photo: user.photo,
           id: user._id,
         };
-
+        console.log(userToken + 'console log 102');
         return res.status(200).json({
           response: { token, userToken },
           success: true,
@@ -109,6 +114,7 @@ const controller = {
 
   loginWithToken: async (req, res, next) => {
     let { user } = req;
+    console.log(user);
     try {
       return res.json({
         response: {
@@ -117,6 +123,7 @@ const controller = {
             name: user.name,
             role: user.role,
             photo: user.photo,
+            banner: user.banner,
             logged: user.logged,
           },
         },
