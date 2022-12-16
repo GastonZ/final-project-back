@@ -1,34 +1,37 @@
-const { createTransport } = require('nodemailer')
-const { google } = require('googleapis')
-const OAuth2 = google.auth.OAuth2
-const { GOOGLE_ID,GOOGLE_REFRESH,GOOGLE_SECRET,GOOGLE_URL,GOOGLE_USER,BACK_URL } = process.env
+const { createTransport } = require("nodemailer");
+const { google } = require("googleapis");
+const OAuth2 = google.auth.OAuth2;
+const {
+  GOOGLE_ID,
+  GOOGLE_REFRESH,
+  GOOGLE_SECRET,
+  GOOGLE_URL,
+  GOOGLE_USER,
+  BACK_URL,
+} = process.env;
 
 function createClient() {
-    return new OAuth2(
-        GOOGLE_ID,
-        GOOGLE_SECRET,
-        GOOGLE_URL
-    )
+  return new OAuth2(GOOGLE_ID, GOOGLE_SECRET, GOOGLE_URL);
 }
 
-function getTransport(client) { 
-    const accessToken = client.getAccessToken() 
-    return createTransport({
-        service: 'gmail',   
-        auth: {             
-            user: GOOGLE_USER,
-            type: 'OAuth2',
-            clientId: GOOGLE_ID,
-            clientSecret: GOOGLE_SECRET,
-            refreshToken: GOOGLE_REFRESH,
-            accessToken: accessToken
-        },
-        tls: { rejectUnauthorized: false }
-    })
+function getTransport(client) {
+  const accessToken = client.getAccessToken();
+  return createTransport({
+    service: "gmail",
+    auth: {
+      user: GOOGLE_USER,
+      type: "OAuth2",
+      clientId: GOOGLE_ID,
+      clientSecret: GOOGLE_SECRET,
+      refreshToken: GOOGLE_REFRESH,
+      accessToken: accessToken,
+    },
+    tls: { rejectUnauthorized: false },
+  });
 }
 
-function getEmailBody(mail,code,host) { 
-    return `
+function getEmailBody(mail, code, host) {
+  return `
     <!DOCTYPE html>
     
     <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
@@ -359,7 +362,7 @@ function getEmailBody(mail,code,host) {
                                             style="padding-left:20px;padding-right:20px;font-size:14px;display:inline-block;letter-spacing:normal;"><span
                                               style="word-break: break-word;"><span style="line-height: 28px;"
                                                 data-mce-style=""><a style="color:#cef10a;text-decoration: none;"
-                                                  href="${host}/api/auth/verify/${code}">Verify here</a>
+                                                  href="${host}api/auth/verify/${code}">Verify here</a>
                                               </span></span></span>
                                         </div><!--[if mso]></center></v:textbox></v:roundrect><![endif]-->
                                       </div>
@@ -492,29 +495,29 @@ function getEmailBody(mail,code,host) {
     </body>
     
     </html>
-    `
+    `;
 }
 
-const accountVerificationEmail = async (mailOfNewUser,codeCalculedWithCrypto) => {
-    const client = createClient() 
-    client.setCredentials({ refresh_token: process.env.GOOGLE_REFRESH }) 
-    const transport = getTransport(client) 
-    const mailOptions = {
-        from: GOOGLE_USER,
-        to: mailOfNewUser,
-        subject: 'Verify your new account in MotorX',
-        html: getEmailBody(mailOfNewUser,codeCalculedWithCrypto,BACK_URL)
+const accountVerificationEmail = async (
+  mailOfNewUser,
+  codeCalculedWithCrypto
+) => {
+  const client = createClient();
+  client.setCredentials({ refresh_token: process.env.GOOGLE_REFRESH });
+  const transport = getTransport(client);
+  const mailOptions = {
+    from: GOOGLE_USER,
+    to: mailOfNewUser,
+    subject: "Verify your new account in MotorX",
+    html: getEmailBody(mailOfNewUser, codeCalculedWithCrypto, BACK_URL),
+  };
+  await transport.sendMail(mailOptions, (error, response) => {
+    if (error) {
+      console.error(error);
+      return;
     }
-    await transport.sendMail(
-        mailOptions,
-        (error, response) => {
-            if (error) {
-                console.error(error)
-                return
-            }
-            console.log('Email sent!')
-        }
-    )
-}
+    console.log("Email sent!");
+  });
+};
 
-module.exports = accountVerificationEmail
+module.exports = accountVerificationEmail;

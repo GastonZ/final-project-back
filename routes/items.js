@@ -15,3 +15,6 @@ router.delete('/:id',passport.authenticate("jwt", { session: false }),isTheSameU
 router.get('/:id', readId)
 
 module.exports = router
+
+
+// crear nuevo propiedad para item para el user comprador con su id para luego crear ruta de guardar en carrito y quitar
