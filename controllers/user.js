@@ -68,7 +68,6 @@ const controller = {
   entry: async (req, res, next) => {
     const { password } = req.body;
     const { user } = req;
-    console.log(user);
     try {
       const checkPassword = bcryptjs.compareSync(password, user.password);
       if (checkPassword) {
@@ -88,7 +87,6 @@ const controller = {
           process.env.KEY_JWT,
           { expiresIn: 60 * 60 * 24 * 365 }
         );
-        console.log(token);
         let userToken = {
           name : user.name,
           email: user.email,
@@ -99,7 +97,6 @@ const controller = {
           photo: user.photo,
           id: user._id,
         };
-        console.log(userToken + 'console log 102');
         return res.status(200).json({
           response: { token, userToken },
           success: true,
@@ -114,7 +111,6 @@ const controller = {
 
   loginWithToken: async (req, res, next) => {
     let { user } = req;
-    console.log(user);
     try {
       return res.json({
         response: {
