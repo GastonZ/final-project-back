@@ -12,11 +12,12 @@ const jwt = require("jsonwebtoken");
 
 const controller = {
   register: async (req, res, next) => {
-    let { name, lastName, age, email, user, password } = req.body;
+    let { name, lastName, email, user, password } = req.body;
     let role = "user";
     let photo = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/1200px-Elon_Musk_Royal_Society_%28crop2%29.jpg";
     let banner = "https://cdn.wallpapersafari.com/13/5/tcfibJ.jpg"
     let verified = false;
+    let testimony = " ";
     let logged = false;
     let code = crypto.randomBytes(10).toString("hex");
     password = bcryptjs.hashSync(password, 10);
@@ -27,8 +28,8 @@ const controller = {
         lastName,
         photo,
         banner,
-        age,
         email,
+        testimony,
         user,
         password,
         role,
@@ -81,6 +82,7 @@ const controller = {
             id: userDB._id,
             name: userDB.name,
             banner: userDB.banner,
+            testimony: userDB.testimony,
             photo: userDB.photo,
             logged: userDB.logged,
           },
@@ -90,6 +92,7 @@ const controller = {
         let userToken = {
           name : user.name,
           email: user.email,
+          testimony: user.testimony,
           banner: user.banner,
           role: user.role,
           lastName: user.lastName,
@@ -118,6 +121,7 @@ const controller = {
             id: user.id,
             name: user.name,
             role: user.role,
+            testimony: user.testimony,
             photo: user.photo,
             banner: user.banner,
             logged: user.logged,
