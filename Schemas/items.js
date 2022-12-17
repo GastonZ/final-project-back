@@ -39,6 +39,13 @@ const schema = joi.object({
                 "any.required": "This field is required.",
                 "string.uri": "This field is required, please, introduce a photo."
             }),
+            gender: joi
+            .string()
+            .required()
+            .messages({
+                "any.required": "This field is required.",
+                "string.empty": "This field is empty, please, introduce a gender."
+            }),
             description: joi
             .string()
             .required()
