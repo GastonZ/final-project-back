@@ -13,7 +13,7 @@ const controller = {
 
   /* Nos fijamos si el Item ya esta en el carrito */
   const itsInTheCart = await Cart.findOne({ name });
-
+  const userCart = await Cart.findOne({ userId });
   /* Si no tenemos el Item */
   if (!itsInItems) {
     res.status(400).json({
@@ -40,9 +40,18 @@ const controller = {
       .catch((error) => console.error(error));
 
     /* Y si esta en el carrito avisamos */
-  } else if (itsInTheCart) {
-    res.status(400).json({
-      message: "The item is in the cart",
+  } else if (itsInTheCart && !userCart) {
+    const newItemInCart = new Cart({ name, image, price, amount: 1, userId });
+     newItemInCart.save();
+   
+    res.json({
+      mensaje: "The new Item has been added to the cart",
+    });
+    
+
+  }else if (userCart){
+    res.json({
+      mensaje: "The item is already in the cart",
     });
   }
 },
