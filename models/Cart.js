@@ -1,7 +1,7 @@
 const { model, Schema, mongoose} = require("mongoose");
 
 const CartSchema = new Schema({
-  name: { type: String, required: true, unique: true },
+  name: { type: String, required: true },
   image: { type: String, required: true },
   amount: { type: Number, required: true },
   price: { type: Number, required: true },

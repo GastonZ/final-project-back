@@ -17,7 +17,7 @@ const controller = {
   /* Si no tenemos el Item */
   if (!itsInItems) {
     res.status(400).json({
-      mensaje: "This Item doesn´t exist in our data base ",
+      message: "This Item doesn´t exist in our data base ",
     });
 
     /* Si nos envian algo y no esta en el carrito lo agregamos */
@@ -42,7 +42,7 @@ const controller = {
     /* Y si esta en el carrito avisamos */
   } else if (itsInTheCart) {
     res.status(400).json({
-      mensaje: "The item is in the cart",
+      message: "The item is in the cart",
     });
   }
 },
