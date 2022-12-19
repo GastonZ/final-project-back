@@ -7,7 +7,7 @@ const Items = require('../models/Items')
 const passport = require ('../config/passport')
 
 
-router.post('/',passport.authenticate("jwt", { session: false }), validator(schema), create)
+router.post('/', validator(schema), create)
 router.get('/', read)
 router.delete('/:id',passport.authenticate("jwt", { session: false }),isTheSameUser(Items), destroy)
 router.get('/:id', readId)

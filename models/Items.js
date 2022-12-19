@@ -8,7 +8,7 @@ const schema = new mongoose.Schema({
     gender:{type: String, required: false},
     description:{type: String, required: true},
     inCart: {type: Boolean, default: false},
-    userId:{type: mongoose.Types.ObjectId, ref:"users" ,required: true}
+    userId:{type: mongoose.Types.ObjectId, ref:"users" ,required: false}
 })
 const Items = mongoose.model('items',schema);
 module.exports = Items;

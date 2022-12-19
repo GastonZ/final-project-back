@@ -55,7 +55,7 @@ const schema = joi.object({
             }),
             userId: joi
             .string()
-            .required()
+         
 })
 
 module.exports = schema
