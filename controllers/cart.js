@@ -49,7 +49,7 @@ const controller = {
     });
     
 
-  }else if (userCart){
+  }else if (userCart && !itsInTheCart){
     res.json({
       mensaje: "The item is already in the cart",
     });
