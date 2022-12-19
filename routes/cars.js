@@ -10,7 +10,7 @@ const passport = require ('../config/passport')
 
 router.post('/',passport.authenticate("jwt", { session: false }), validator(schema), create)
 router.get('/', read)
-/* router.put('/:id',passport.authenticate("jwt", { session: false }),validator(schemaCity), update) */
+
 router.delete('/:id',passport.authenticate("jwt", { session: false }),isTheSameUser(Cars), destroy)
 router.get('/:id', readId)
 
