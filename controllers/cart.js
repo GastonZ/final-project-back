@@ -13,8 +13,9 @@ const controller = {
 
   /* Nos fijamos si el Item ya esta en el carrito */
   const itsInTheCart = await Cart.findOne({ name });
-  const userCart = await Cart.findOne({ userId });
+  const userCart = await Cart.findOne({ userId,name });
   /* Si no tenemos el Item */
+
   if (!itsInItems) {
     res.status(400).json({
       mensaje: "This Item doesn´t exist in our data base ",
@@ -40,21 +41,21 @@ const controller = {
       .catch((error) => console.error(error));
 
     /* Y si esta en el carrito avisamos */
-  } else if (itsInTheCart && !userCart) {
+  } else if (!userCart) {
     const newItemInCart = new Cart({ name, image, price, amount: 1, userId });
-     newItemInCart.save();
-   
+    newItemInCart.save();
+
     res.json({
       mensaje: "The new Item has been added to the cart",
     });
-    
-
-  }else if (userCart){
+  } else if (userCart) {
     res.json({
       mensaje: "The item is already in the cart",
     });
   }
 },
+
+//*
 deleteItem : async (req, res) => {
     const { itemId } = req.params;
   
