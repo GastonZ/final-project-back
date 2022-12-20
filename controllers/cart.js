@@ -72,7 +72,7 @@ increaseAmount : async (req, res) =>{
       new: true,
     }).then((item) => {
       res.json({
-        mensaje: `The item: ${item.name} was updated`,
+        mensaje: `The item: ${item.title} was updated`,
         item,
       });
     });
