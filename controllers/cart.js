@@ -42,8 +42,10 @@ const controller = {
 
     /* Y si esta en el carrito avisamos */
   } else if (!userCart) {
-    const newItemInCart = new Cart({ name, image, price, amount: 1, userId });
+    const newItemInCart = new Cart({ name, image, price, amount: 1, userId  });
+    
     newItemInCart.save();
+
 
     res.json({
       mensaje: "The new Item has been added to the cart",
