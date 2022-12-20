@@ -3,17 +3,17 @@ const Item = require('../models/Items')
 
 const controller = {
  addItemCart : async (req, res) => {
-  const { name, image, price, userId } = req.body;
+  const { title, picture_url, unit_price, userId } = req.body;
 
   /* Nos fijamos si tenemos el Item */
-  const itsInItems = await Item.findOne({ name });
+  const itsInItems = await Item.findOne({ title });
 
   /* Nos fijamos si todos los campos vienen con info */
-  const isntEmpty = name !== "" && image !== "" && price !== "" && userId !== "";
+  const isntEmpty = title !== "" && picture_url !== "" && unit_price !== "" && userId !== "";
 
   /* Nos fijamos si el Item ya esta en el carrito */
-  const itsInTheCart = await Cart.findOne({ name });
-  const userCart = await Cart.findOne({ userId,name });
+  const itsInTheCart = await Cart.findOne({ title });
+  const userCart = await Cart.findOne({ userId,title });
   /* Si no tenemos el Item */
 
   if (!itsInItems) {
@@ -23,18 +23,18 @@ const controller = {
 
     /* Si nos envian algo y no esta en el carrito lo agregamos */
   } else if (isntEmpty && !itsInTheCart) {
-    const newItemInCart = new Cart({ name, image, price, amount: 1, userId });
+    const newItemInCart = new Cart({ title, picture_url, unit_price, quantity: 1, userId });
 
     /* Y actualizamos la prop inCart: true en nuestros Items */
     await Item.findByIdAndUpdate(
       itsInItems?._id,
-      { inCart: true, name, image, price, userId },
+      { inCart: true, title, picture_url, unit_price, userId },
       { new: true }
     )
       .then((item) => {
         newItemInCart.save();
         res.json({
-          mensaje: `The item has been added to the cart`,
+          message: `The item has been added to the cart`,
           item,
         });
       })
@@ -42,15 +42,15 @@ const controller = {
 
     /* Y si esta en el carrito avisamos */
   } else if (!userCart) {
-    const newItemInCart = new Cart({ name, image, price, amount: 1, userId });
+    const newItemInCart = new Cart({ title, picture_url, unit_price, quantity: 1, userId });
     newItemInCart.save();
 
     res.json({
-      mensaje: "The new Item has been added to the cart",
+      message: "The new Item has been added to the cart",
     });
   } else if (userCart) {
     res.json({
-      mensaje: "The item is already in the cart",
+      message: "The item is already in the cart",
     });
   }
 },
@@ -63,8 +63,8 @@ deleteItem : async (req, res) => {
     const itemInCart = await Cart.findById(itemId);
   
     /* Buscamos el item en nuestra DB por el nombre del que esta en el carrito */
-    const { name, image, price, _id } = await Item.findOne({
-      name: itemInCart.name,
+    const { title, picture_url, unit_price, _id } = await Item.findOne({
+      title: itemInCart.title,
     });
   
     /* Buscamos y eliminamos el item con la id */
@@ -76,15 +76,15 @@ deleteItem : async (req, res) => {
     /* Y el new para devolver el producto editado */
     await Item.findByIdAndUpdate(
       _id,
-      { inCart: false, name, image, price },
+      { inCart: false, title, picture_url, unit_price },
       { new: true }
     )
       .then((item) => {
         res.json({
-          mensaje: `The item ${item.name} was eliminated of the cart`,
+          message: `The item ${item.title} was eliminated of the cart`,
         });
       })
-      .catch((error) => res.json({ mensaje: "Error" }));
+      .catch((error) => res.json({ message: "Error" }));
   },
   getItems : async (req, res) => {
     const items = await Item.find();
@@ -118,31 +118,31 @@ deleteItem : async (req, res) => {
   
       /* Si esta el item en el carrito y quiero agregar */
     } else if (itemSearched && query === "add") {
-      body.amount = body.amount + 1;
+      body.quantity = body.quantity + 1;
   
       await Cart.findByIdAndUpdate(itemId, body, {
         new: true,
       }).then((item) => {
         res.json({
-          mensaje: `The item: ${item.name} was updated`,
+          message: `The item: ${item.title} was updated`,
           item,
         });
       });
   
       /* Si esta el item en el carrito y quiero sacar */
     } else if (itemSearched && query === "del") {
-      body.amount = body.amount - 1;
+      body.quantity = body.quantity - 1;
   
       await Cart.findByIdAndUpdate(itemId, body, {
         new: true,
       }).then((item) =>
         res.json({
-          mensaje: `The item: ${item.name} was updated`,
+          message: `The item: ${item.title} was updated`,
           item,
         })
       );
     } else {
-      res.status(400).json({ mensaje: "Error" });
+      res.status(400).json({ message: "Error" });
     }
   },
 }

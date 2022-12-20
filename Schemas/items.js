@@ -1,7 +1,7 @@
 const joi = require('joi')
 
 const schema = joi.object({
-            name: joi
+        title: joi
             .string()
             .required()
             .min(2)
@@ -11,7 +11,7 @@ const schema = joi.object({
                 "string.min": "This field is required, please, introduce a name with a minimum of 2 letters.",
             })
             ,
-            category: joi
+            category_id: joi
             .string()
             .required()
             .min(2)
@@ -22,7 +22,7 @@ const schema = joi.object({
                 "string.min": "This field is required, please, introduce a name with a minimum of 2 letters.",
                 "string.max": "This field is required, please, introduce a name with less than 30 letters."
             }),
-            price: joi
+            unit_price: joi
             .number()
             .required()
             .min(1)
@@ -31,7 +31,7 @@ const schema = joi.object({
                 "number.empty": "This field is empty, please, introduce a number."
                 
             }),
-            image: joi
+            picture_url: joi
             .string()
             .required()
             .uri()

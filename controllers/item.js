@@ -20,13 +20,13 @@ const Item = require('../models/Items')
    read: async (req, res) => {
      let query = {};
      console.log(req.query);
-     if (req.query.name) {
-       query = { name: { $regex: req.query.name, $options: "i" } };
+     if (req.query.title) {
+       query = { title: { $regex: req.query.title, $options: "i" } };
      }
-     if (req.query.price) {
+     if (req.query.unit_price) {
        query = {
          ...query,
-         price: req.query.price.split(","),
+         unit_price: req.query.unit_price.split(","),
        };
      }
      try {
@@ -70,7 +70,7 @@ const Item = require('../models/Items')
      let { id } = req.params;
      try {
        let oneItem = await Item.findById(id).populate([
-         { path: "userId", select: "name photo -_id" },
+         { path: "userId", select: "title picture_url -_id" },
        ]);
        if (id) {
          res.status(200).json({
