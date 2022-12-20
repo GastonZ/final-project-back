@@ -55,6 +55,33 @@ const controller = {
   }
 },
 
+increaseAmount : async (req, res) =>{
+
+  const { itemId } = req.params;
+
+  const body = req.body;
+
+  /* Buscamos el item en el carrito */
+  const itemSearched = await Cart.findById(itemId);
+
+  if (itemSearched) {
+
+    body.amount + 1 ;
+    console.log(body.amount);
+    await Cart.findByIdAndUpdate(itemId, body, {
+      new: true,
+    }).then((item) => {
+      res.json({
+        mensaje: `The item: ${item.name} was updated`,
+        item,
+      });
+    });
+
+  } 
+
+
+},
+
 //*
 deleteItem : async (req, res) => {
     const { itemId } = req.params;
