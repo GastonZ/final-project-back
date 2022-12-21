@@ -9,7 +9,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true })
 
 const collection = client.db("motorx").collection("carts")
 
-
+let pacialQuantity = 0
 
 
 const controller = {
@@ -66,7 +66,7 @@ const controller = {
         newItemInCart.save();
         res.json({
           message: `The item has been added to the cart`,
-          item,
+          newItemInCart,
         });
       })
       .catch((error) => console.error(error));
@@ -166,7 +166,7 @@ deleteItem : async (req, res) => {
     const { itemId } = req.params;
     const { query } = req.query;
     const body = req.body;
-  
+
     /* Buscamos el item en el carrito */
     const itemSearched = await Cart.findById(itemId);
   
@@ -176,9 +176,9 @@ deleteItem : async (req, res) => {
   
       /* Si esta el item en el carrito y quiero agregar */
     } else if (itemSearched && query === "add") {
-      body.quantity = body.quantity + 1;
-  
-      await Cart.findByIdAndUpdate(itemId, body, {
+      pacialQuantity += body.quantity;
+      
+      await Cart.findByIdAndUpdate(itemId, {quantity:pacialQuantity}, {
         new: true,
       }).then((item) => {
         res.json({
@@ -189,9 +189,9 @@ deleteItem : async (req, res) => {
   
       /* Si esta el item en el carrito y quiero sacar */
     } else if (itemSearched && query === "del") {
-      body.quantity = body.quantity - 1;
+      pacialQuantity -= body.quantity;
   
-      await Cart.findByIdAndUpdate(itemId, body, {
+      await Cart.findByIdAndUpdate(itemId, {quantity:pacialQuantity}, {
         new: true,
       }).then((item) =>
         res.json({
