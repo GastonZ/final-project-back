@@ -1,7 +1,38 @@
 const Cart = require("../models/Cart");
 const Item = require('../models/Items')
+const { mongoose} = require("mongoose");
+const MongoClient = require('mongodb').MongoClient
+const uri = "mongodb+srv://gaston:hola123456@cluster0.rwbkoiq.mongodb.net/motorx"
+
+
+const client = new MongoClient(uri, { useNewUrlParser: true })
+
+const collection = client.db("motorx").collection("carts")
+
+
+
 
 const controller = {
+  deleteManyById : async (req, res) => {
+    
+    const { userId } = req.params;
+
+    try {
+      await collection.deleteMany({ "userId" : mongoose.Types.ObjectId(userId) })
+      res.status(200).json({
+        message: "Thank you for your purchase",
+        success: true
+      });
+    } catch (error) {
+      res.status(400).json({
+        message: "What the shit",
+        success: false
+      });
+    }
+    
+
+
+  },
  addItemCart : async (req, res) => {
   const { title, picture_url, unit_price, userId } = req.body;
 
@@ -172,5 +203,6 @@ deleteItem : async (req, res) => {
       res.status(400).json({ message: "Error" });
     }
   },
+
 }
 module.exports = controller
