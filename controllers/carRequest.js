@@ -1,3 +1,4 @@
+const CarRequest = require('../models/CarRequest')
 const carRequest = require('../models/CarRequest')
 
  const controller = {
@@ -17,7 +18,25 @@ const carRequest = require('../models/CarRequest')
             message: error.message
         })
     }
-    }
+    
+    },
+
+    read: async(req,res) => {
+
+        try {
+            let read_request = await CarRequest.find()
+            res.status(200).json({
+                response: read_request,
+                success: true,
+                message: 'The cars has been found'
+            })
+        } catch (error) {
+            res.status(400).json({
+                success: false,
+                message: error.message
+            })
+        }
+    } 
     
 }
 
