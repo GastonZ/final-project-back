@@ -1,20 +1,17 @@
 const joi = require('joi')
 
 const schema = joi.object({
-            name: joi
+        title: joi
             .string()
             .required()
             .min(2)
-            .max(30)
             .messages({
                 "any.required": "This field is required.",
                 "string.empty": "This field is empty, please, introduce a name.",
                 "string.min": "This field is required, please, introduce a name with a minimum of 2 letters.",
-                "string.max": "This field is required, please, introduce a name with less than 30 letters."
             })
             ,
-
-            lastName: joi
+            category_id: joi
             .string()
             .required()
             .min(2)
@@ -25,47 +22,40 @@ const schema = joi.object({
                 "string.min": "This field is required, please, introduce a name with a minimum of 2 letters.",
                 "string.max": "This field is required, please, introduce a name with less than 30 letters."
             }),
-            photo: joi
+            unit_price: joi
+            .number()
+            .required()
+            .min(1)
+            .messages({
+                "any.required": "This field is required.",
+                "number.empty": "This field is empty, please, introduce a number."
+                
+            }),
+            picture_url: joi
             .string()
+            .required()
             .uri()
             .messages({
                 "any.required": "This field is required.",
                 "string.uri": "This field is required, please, introduce a photo."
             }),
-            banner: joi
+            gender: joi
             .string()
-            .uri()
+            .required()
             .messages({
                 "any.required": "This field is required.",
-                "string.uri": "This field is required, please, introduce a banner."
+                "string.empty": "This field is empty, please, introduce a gender."
             }),
-            age: joi
-            .number()
-            .min(1)
-            .messages({
-                "any.required": "This field is required.",
-                "number.empty": "This field is empty, please, introduce a number."
-
-            }),
-            email: joi
+            description: joi
             .string()
-            .email()
             .required()
             .messages({
                 "any.required": "This field is required.",
-                "string.empty": "This field is empty, please, introduce an email."
+                "string.empty": "This field is empty, please, introduce a text."
             }),
-            testimony: joi
-            .string(),
-            password: joi
+            userId: joi
             .string()
             .required()
-            .min(8)
-            .messages({
-                "any.required": "This field is required.",
-                "string.empty": "This field is empty, please, introduce a password.",
-                "string.min": "This field is required, please, introduce a password with a minimum of 8 characters."
-            }),
 })
 
 module.exports = schema

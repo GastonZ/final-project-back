@@ -24,10 +24,10 @@ create: async(req, res) => {
         if (req.query.name) {
             query = {name:{"$regex": req.query.name, $options:'i'}}
         }
-        if (req.query.continent) {
+        if (req.query.price) {
             query = {
                 ...query,
-                continent: req.query.continent.split(',')
+                price: req.query.price.split(',')
             }
         }
         try {
@@ -45,7 +45,7 @@ create: async(req, res) => {
         }
         },
 
-update: async(req, res) => {
+/* update: async(req, res) => {
     let { id } = req.params
     try {
         let oneCar = await Car.findOneAndUpdate({_id: id}, req.body, {new:true})
@@ -67,7 +67,7 @@ update: async(req, res) => {
             message: error.message
         })
     }
-    },
+    }, */
     destroy: async(req, res) => {
         let { id } = req.params
         try {

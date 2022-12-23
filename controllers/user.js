@@ -12,9 +12,12 @@ const jwt = require("jsonwebtoken");
 
 const controller = {
   register: async (req, res, next) => {
-    let { name, lastName, photo, age, email, user, password } = req.body;
+    let { name, lastName, email, user, password } = req.body;
     let role = "user";
+    let photo = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/1200px-Elon_Musk_Royal_Society_%28crop2%29.jpg";
+    let banner = "https://cdn.wallpapersafari.com/13/5/tcfibJ.jpg"
     let verified = false;
+    let testimony = " ";
     let logged = false;
     let code = crypto.randomBytes(10).toString("hex");
     password = bcryptjs.hashSync(password, 10);
@@ -24,8 +27,9 @@ const controller = {
         name,
         lastName,
         photo,
-        age,
+        banner,
         email,
+        testimony,
         user,
         password,
         role,
@@ -48,8 +52,14 @@ const controller = {
         { new: true }
       );
       if (user) {
+        
+          res.status(302).json({
+            response: code,
+            success: true,
+            message: "User verified",
+          });
         return res.redirect("http://localhost:3000/");
-      }
+        }
       return userNotFoundResponse(req, res);
     } catch (error) {
       next(error);
@@ -71,22 +81,25 @@ const controller = {
           {
             id: userDB._id,
             name: userDB.name,
+            banner: userDB.banner,
+            testimony: userDB.testimony,
             photo: userDB.photo,
             logged: userDB.logged,
           },
           process.env.KEY_JWT,
           { expiresIn: 60 * 60 * 24 * 365 }
         );
-        console.log(token);
         let userToken = {
+          name : user.name,
           email: user.email,
+          testimony: user.testimony,
+          banner: user.banner,
           role: user.role,
           lastName: user.lastName,
           logged: user.logged,
           photo: user.photo,
           id: user._id,
         };
-
         return res.status(200).json({
           response: { token, userToken },
           success: true,
@@ -108,7 +121,9 @@ const controller = {
             id: user.id,
             name: user.name,
             role: user.role,
+            testimony: user.testimony,
             photo: user.photo,
+            banner: user.banner,
             logged: user.logged,
           },
         },
