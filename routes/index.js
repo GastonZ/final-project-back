@@ -1,9 +1,14 @@
-var express = require('express');
-var router = express.Router();
+const router = require('./users');
+let users = require('./users')
+let cars = require('./cars')
+let items = require('./items')
+let cart = require('./cart')
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+router.use('/cars', cars)
+router.use('/auth', users)
+router.use('/items', items)
+router.use('/cart', cart)
+
+
 
 module.exports = router;
